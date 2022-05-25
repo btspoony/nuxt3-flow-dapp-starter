@@ -6,7 +6,16 @@ export default defineNuxtConfig({
   // set source dir
   srcDir: "src/",
   // Environment Variables
-  runtimeConfig: {},
+  runtimeConfig: {
+    // The private keys which are only available within server-side
+    // NOTHING
+    // Keys within public, will be also exposed to the client-side
+    public: {
+      network: "",
+      accessApi: "",
+      walletDiscovery: "",
+    },
+  },
   // ts config
   typescript: {
     shim: false,
