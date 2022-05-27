@@ -20,6 +20,9 @@ export default defineNuxtConfig({
   typescript: {
     shim: false,
   },
+  build: {
+    transpile: ["@heroicons/vue"],
+  },
   // installed modules
   modules: [
     // Doc: https://github.com/nuxt-community/tailwindcss-module
@@ -42,5 +45,8 @@ export default defineNuxtConfig({
         ],
       },
     },
+  },
+  nitro: {
+    preset: "vercel",
   },
 });
