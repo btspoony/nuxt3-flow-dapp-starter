@@ -49,6 +49,7 @@
     "@heroicons/vue": "^1.0.6",
     "@onflow/fcl": "latest",
     "@onflow/types": "^1.0.1",
+    "@vueuse/core": "^8.7.5",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.0"
   }
