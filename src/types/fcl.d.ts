@@ -110,8 +110,23 @@ declare module "@onflow/fcl" {
     signature: string;
   }
 
+  export interface FTypeSignature extends TransactionSignature {
+    f_type: "CompositeSignature";
+    f_vsn: "1.0.0";
+  }
+
   export interface SigningData {
     message: string;
+  }
+
+  export interface KeyObject {
+    index: number;
+    publicKey: string;
+    signAlgo: number;
+    hashAlgo: number;
+    weight: number;
+    sequenceNumber: number;
+    revoked: boolean;
   }
 
   export interface Account {
@@ -119,7 +134,7 @@ declare module "@onflow/fcl" {
     balance: number; // The FLOW balance of the account in 10*6.
     code: string; //	The code of any Cadence contracts stored in the account.
     contracts: Record<string, unknown>; //	Map of deployed contract name to cadence string.
-    keys: Record<string, unknown>; // Any contracts deployed to this account.
+    keys: Record<string, KeyObject>; // Any contracts deployed to this account.
   }
 
   export interface AuthZ extends Account {
@@ -252,7 +267,7 @@ declare module "@onflow/fcl" {
   export type Pipe = (ix: Interaction) => Interaction;
 
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface IJsonArray extends Array<AnyJson> { }
+  interface IJsonArray extends Array<AnyJson> {}
 
   export type Decoder = (dictionary, decoders, stack) => Record<any, any>;
   export type DecoderGroup = Record<string, Decoder>;
@@ -273,14 +288,14 @@ declare module "@onflow/fcl" {
     signatures: TransactionSignature[];
   }
 
-  type ArugmentFunction = (
+  type ArgumentFunction = (
     argFunc: typeof arg,
     t: typeof ftypes
   ) => Array<Argument>;
 
   export function query(opts: {
     cadence: string;
-    args?: ArugmentFunction;
+    args?: ArgumentFunction;
     limit?: number;
   }): Promise<Response>;
 
@@ -288,10 +303,11 @@ declare module "@onflow/fcl" {
 
   export function mutate(opts: {
     cadence: string;
-    args?: ArugmentFunction;
+    args?: ArgumentFunction;
     limit?: number;
     proposer?: AuthorizationFunction;
     payer?: AuthorizationFunction;
+    authorizations?: [AuthorizationFunction];
   }): Promise<string>;
 
   export function send(args: any, opts?: any): Promise<Response>;
@@ -305,6 +321,8 @@ declare module "@onflow/fcl" {
   export function latestBlock(isSealed: boolean): Promise<BlockObject>;
 
   export function sansPrefix(address: string): string;
+
+  export function withPrefix(address: string): string;
 
   export function tx(transactionId: any): TransactionResult;
 
@@ -341,7 +359,42 @@ declare module "@onflow/fcl" {
 
   export function config(): FlowConfig;
 
+  // Utils
+  export interface AccountProofData {
+    address: string;
+    nonce: string;
+    signatures: [FTypeSignature];
+  }
+  export interface VerifySigOption {
+    fclCryptoContract?: string;
+  }
+
+  export interface AppUtils {
+    verifyAccountProof: (
+      appIdentifier: string,
+      accountProofData: AccountProofData,
+      opts?: VerifySigOption
+    ) => Promise<boolean>;
+
+    verifyUserSignatures: (
+      message: string,
+      signatures: [FTypeSignature],
+      opts?: VerifySigOption
+    ) => Promise<boolean>;
+  }
+  export const AppUtils: AppUtils;
+
+  export interface WalletUtils {
+    encodeAccountProof: (
+      accountProofData: AccountProofData,
+      includeDomainTag?: boolean
+    ) => string;
+    // TODO add more
+  }
+  export const WalletUtils: WalletUtils;
+
   // SDK
+  export function getAccount(address: string): Pipe;
   export function getBlock(isSealed?: boolean): Pipe;
   export function getTransaction(transactionId: string): Pipe;
   export function getTransactionStatus(transactionId: string): Pipe;

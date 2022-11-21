@@ -37,14 +37,14 @@ pub contract MetadataViews {
     ///
     pub struct Display {
 
-        /// The name of the object. 
+        /// The name of the object.
         ///
         /// This field will be displayed in lists and therefore should
         /// be short an concise.
         ///
         pub let name: String
 
-        /// A written description of the object. 
+        /// A written description of the object.
         ///
         /// This field will be displayed in a detailed view of the object,
         /// so can be more verbose (e.g. a paragraph instead of a single line).
@@ -77,7 +77,7 @@ pub contract MetadataViews {
         pub fun uri(): String
     }
 
-    /// HTTPFile is a file that is accessible at an HTTP (or HTTPS) URL. 
+    /// HTTPFile is a file that is accessible at an HTTP (or HTTPS) URL.
     ///
     pub struct HTTPFile: File {
         pub let url: String
@@ -137,7 +137,7 @@ pub contract MetadataViews {
     *  Defines the composable royalty standard that gives marketplaces a unified interface
     *  to support NFT royalties.
     *
-    *  Marketplaces can query this `Royalties` struct from NFTs 
+    *  Marketplaces can query this `Royalties` struct from NFTs
     *  and are expected to pay royalties based on these specifications.
     *
     */
@@ -174,7 +174,7 @@ pub contract MetadataViews {
         pub let receiver: Capability<&AnyResource{FungibleToken.Receiver}>
 
         /// Multiplier used to calculate the amount of sale value transferred to royalty receiver.
-        /// Note - It should be between 0.0 and 1.0 
+        /// Note - It should be between 0.0 and 1.0
         /// Ex - If the sale value is x and multiplier is 0.56 then the royalty value would be 0.56 * x.
         ///
         /// Generally percentage get represented in terms of basis points
@@ -219,7 +219,7 @@ pub contract MetadataViews {
 
     // A license according to https://spdx.org/licenses/
     //
-    // This view can be used if the content of an NFT is licensed. 
+    // This view can be used if the content of an NFT is licensed.
     pub struct License {
         pub let spdxIdentifier: String
 
