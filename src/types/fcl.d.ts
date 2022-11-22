@@ -351,7 +351,7 @@ declare module "@onflow/fcl" {
     authorization: typeof authorization;
     signUserMessage: (msg: string) => Promise<TransactionSignature[]>;
     subscribe: (callback: SubscribeCallback) => void;
-    snapshot: () => UserSnapshot;
+    snapshot: () => Promise<UserSnapshot>;
   }
 
   export const currentUser: CurrentUser;
