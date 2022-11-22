@@ -1,5 +1,5 @@
-import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
-import { NodeModulesPolyfillPlugin } from "@esbuild-plugins/node-modules-polyfill";
+import inject from "@rollup/plugin-inject";
+import { nodePolyfills } from "vite-plugin-node-polyfills";
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
@@ -32,20 +32,24 @@ export default defineNuxtConfig({
   vite: {
     // raw assets
     assetsInclude: ["**/*.cdc"],
+    // plugins
+    plugins: [
+      nodePolyfills({
+        // Whether to polyfill `node:` protocol imports.
+        protocolImports: true,
+      }),
+    ],
+    build: {
+      rollupOptions: {
+        plugins: [inject({ Buffer: ["buffer", "Buffer"] })],
+      },
+    },
     optimizeDeps: {
       esbuildOptions: {
         // Node.js global to browser globalThis
         define: {
           global: "globalThis",
         },
-        // Enable esbuild polyfill plugins
-        plugins: [
-          NodeGlobalsPolyfillPlugin({
-            process: true,
-            buffer: true,
-          }),
-          NodeModulesPolyfillPlugin(),
-        ],
       },
     },
   },

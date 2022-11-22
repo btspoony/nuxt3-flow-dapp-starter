@@ -159,6 +159,7 @@ declare module "@onflow/fcl" {
     scoped?: Record<string, string>;
     type: string;
     uid: string;
+    data?: any;
   }
 
   export interface UserSnapshot {
