@@ -1,4 +1,5 @@
 import * as fcl from "@onflow/fcl";
+import { send as grpcSend } from "@onflow/transport-grpc";
 
 export default defineNuxtPlugin((nuxtApp) => {
   const config = useRuntimeConfig();
@@ -10,6 +11,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     .put("flow.network", config.public.network)
     .put("accessNode.api", config.public.accessApi)
     .put("discovery.wallet", config.public.walletDiscovery)
+    .put("sdk.transport", grpcSend)
     .put("app.detail.title", appName)
     .put("app.detail.icon", "https://i.imgur.com/r23Zhvu.png")
     .put("service.OpenID.scopes", "email email_verified name zoneinfo")
