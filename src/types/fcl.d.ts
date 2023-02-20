@@ -1,6 +1,8 @@
 declare module "*.cdc";
 declare module "*.cdc?raw";
 
+declare module "@onflow/transport-grpc";
+
 declare module "@onflow/config" {
   // Config
   export interface FlowConfig {
@@ -160,6 +162,7 @@ declare module "@onflow/fcl" {
     type: string;
     uid: string;
     data?: any;
+    network?: string;
   }
 
   export interface UserSnapshot {

@@ -5,6 +5,10 @@ import { nodePolyfills } from "vite-plugin-node-polyfills";
 export default defineNuxtConfig({
   // set source dir
   srcDir: "src/",
+  // App Variables
+  appConfig: {
+    title: "Flow DApp",
+  },
   // Environment Variables
   runtimeConfig: {
     // The private keys which are only available within server-side

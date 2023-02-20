@@ -2,8 +2,8 @@ import * as fcl from "@onflow/fcl";
 import { send as grpcSend } from "@onflow/transport-grpc";
 
 export default defineNuxtPlugin((nuxtApp) => {
+  const appConfig = useAppConfig();
   const config = useRuntimeConfig();
-  const appName = "Flow DApp";
 
   // initialize fcl
   fcl
@@ -12,7 +12,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     .put("accessNode.api", config.public.accessApi)
     .put("discovery.wallet", config.public.walletDiscovery)
     .put("sdk.transport", grpcSend)
-    .put("app.detail.title", appName)
+    .put("app.detail.title", appConfig.title)
     .put("app.detail.icon", "https://i.imgur.com/r23Zhvu.png")
     .put("service.OpenID.scopes", "email email_verified name zoneinfo")
     .put("fcl.limit", 9999);
@@ -23,7 +23,6 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   return {
     provide: {
-      appName: () => appName,
       fcl: fcl,
       scripts: {},
       transactions: {},
